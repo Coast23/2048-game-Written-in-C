@@ -10,3 +10,9 @@ For personal use.
 (最好是win10及以上)
 
 个人练手的第一个C语言项目.
+
+Screenshots:
+
+![image](https://github.com/Coast23/2048-game-written-in-C/blob/main/1.png)
+
+![image](https://github.com/Coast23/2048-game-written-in-C/blob/main/2.png)
