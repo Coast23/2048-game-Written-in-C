@@ -89,11 +89,11 @@ void printBoard(){
 // The most difficult part of the code.
 // I decide to deal all directions separately.
 // Yeah, this sounds very foolish, but it can reduce bugs and make the code more readable.
-bool moveAndMerge(unsigned char direction){
+int moveAndMerge(unsigned char direction){
     /*
     Return values:
-        true if the board is changed.
-        false if the board is unchanged.
+        1 if the board is changed.
+        0 if the board is unchanged.
     */
     char tmp[SIZE][SIZE];
     for(int i = 0; i < SIZE; ++i) for(int j = 0; j < SIZE; ++j) tmp[i][j] = board[i][j];
@@ -194,8 +194,8 @@ bool moveAndMerge(unsigned char direction){
             }
             break;
     }
-    bool flag = false;
-    for(int i = 0; i < SIZE; ++i) for(int j = 0; j < SIZE; ++j) if(tmp[i][j] != board[i][j]) flag = true;
+    int flag = 0;
+    for(int i = 0; i < SIZE; ++i) for(int j = 0; j < SIZE; ++j) if(tmp[i][j] > 0 && tmp[i][j] != board[i][j]) flag = 1;
     return flag;
 }
 
@@ -231,13 +231,19 @@ int onUserInput(){
     return ret;
 }
 
-bool isGameOver(){
+int isGameOver(){
     for(int i = 0; i < SIZE; ++i) for(int j = 0; j < SIZE; ++j)
-        if(!board[i][j]) return false;
+        if(!board[i][j]) return 0;
 
     for(int i = 0; i < SIZE; ++i) for(int j = 0; j < SIZE; ++j)
-        if(i > 0 && board[i][j] == board[i-1][j] || j > 0 && board[i][j] == board[i][j-1]) return false;
-    return true;
+        if(i > 0 && board[i][j] == board[i-1][j] || j > 0 && board[i][j] == board[i][j-1]) return 0;
+    return 1;
+}
+
+int isGameWin(){
+    for(int i = 0; i < SIZE; ++i) for(int j = 0; j < SIZE; ++j)
+        if(board[i][j] == 2048) return 1;
+    return 0;
 }
 
 int main(){
@@ -254,6 +260,10 @@ int main(){
             printf("Game Over! Final Score: %d\n", score);
             system("pause");
             break;
+        }
+        if(isGameWin()){
+            printf("Congratulations! You made it to 2048!");
+            system("pause");
         }
     }
     return 0^(0-0)^0;
